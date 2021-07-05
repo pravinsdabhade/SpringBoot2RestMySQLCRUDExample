@@ -9,37 +9,35 @@ Mini Project (Backend ) - 2 <br>- Creating using Rest API, Spring Data JPA, to c
 
 ============TEST OPERATIONS=============================================
 
-1. To create data:
-POST 	localhost:8080/api/employees/save	  SEND
-	Body
-		(*) raw   [JSON]
-{
-    "empName": "Sham sunder",
-    "empSalary": 10000.0,
-    "empDept": "Test"
-
+1. To create data:<br>
+POST 	<b>localhost:8080/api/employees/save </b>	  SEND <br>
+	Body<br>
+		(*) raw   [JSON] <br>
+{<br>
+    "empName": "Sham sunder",<br>
+    "empSalary": 10000.0,<br>
+    "empDept": "Test"<br>
 }
 
 -------------------------------------------------------------------------------------
-2. To get all data:
-GET  	localhost:8080/api/employees/all  		SEND
+2. To get all data: <br>
+GET  	<b>localhost:8080/api/employees/all  </b> 		SEND
 
 -------------------------------------------------------------------------------------
-3. To only 1 employee's data:
-GET  	localhost:8080/api/employees/one/3  	SEND
+3. To only 1 employee's data: <br>
+GET  	<b>localhost:8080/api/employees/one/3  </b>	SEND
 
 -------------------------------------------------------------------------------------
-4. To update existing one employee's data:
-PUT		localhost:8080/api/employees/update		SEND
+4. To update existing one employee's data: <br>
+PUT	<b>localhost:8080/api/employees/update	</b>	SEND
 
 {
     "empId": 2,
     "empName": "Ram",
     "empSalary": 25000.0,
     "empDept": "Managment"
-
 }
 
 -------------------------------------------------------------------------------------
-5. To delete one employee data by id
-DELETE		localhost:8080/api/employees/remove/3	SEND
+5. To delete one employee data by id: <br>
+DELETE	<b> ocalhost:8080/api/employees/remove/3 </b>	SEND
