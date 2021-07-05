@@ -40,4 +40,4 @@ PUT	<b>localhost:8080/api/employees/update	</b>	SEND
 
 -------------------------------------------------------------------------------------
 5. To delete one employee data by id: <br>
-DELETE	<b> ocalhost:8080/api/employees/remove/3 </b>	SEND
+DELETE	<b> localhost:8080/api/employees/remove/3 </b>	SEND
