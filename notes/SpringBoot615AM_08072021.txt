@@ -1,0 +1,142 @@
+			         Date : 08-Jul-21
+				Spring Boot 6:15AM
+				   Mr. RAGHU
+		----------------------------------------------
+		Swagger Configuration -- Spring Boot Application
+
+*) Swagger is a open source API (given by SpringFox Company)
+*) Swagger is a Testing tool, similer to POSTMAN. But it is automated.
+*) It will detect all rest controller methods and display at browser as UI.
+   Need not to enter any URL/HttpMethod Manually, provide input if required
+   and execute them.
+*) Swagger behaves like client tool.
+
+>>   We need to define swagger as onetime setup.
+a. Swagger API (pom.xml)
+
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.9.2</version>
+</dependency>
+
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.9.2</version>
+</dependency>
+
+b. Swagger Config class
+
+package in.nareshit.raghu.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+
+	@Bean
+	public Docket createDocket() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("in.nareshit.raghu.rest"))
+				.paths(PathSelectors.regex("/api.*"))
+				.build()
+				;
+	}
+}
+
+3. Run App and enter URL
+http://localhost:8081/swagger-ui.html
+
+---------------------------------------------------
+a. create swagger UI object 'Docket' using Swagger 2.x version
+	(empty object is created)
+
+
+     Docket(DocumentationType.SWAGGER_2)
+
+b. Select all RestControllers from one common package name.
+
+   .select()
+   .apis(
+	RequestHandlerSelectors.basePackage("in.nareshit.raghu.rest")
+   ) //RestControllers
+
+   For all RestController without depending any package name: 
+           .apis(RequestHandlerSelectors.any())
+
+c. Provide one Common Path for RestControllers
+
+    .paths(PathSelectors.regex("/api.*"))
+
+    dot(.) -> character  , Star(*)-> multiple (zero-n)
+
+    /api.*   -> starts with /api later zero to n characters.
+
+d. Finally create Document/Docket 
+
+    .build()
+
+------------optional : ApiInfo (meta data/display data) ---------------
+package in.nareshit.raghu.config;
+
+import java.util.Collections;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+
+	@Bean
+	public Docket createDocket() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("in.nareshit.raghu.rest"))
+				.paths(PathSelectors.regex("/api.*"))
+				.build()
+				.apiInfo(apiInfo())
+				;
+	}
+
+	private ApiInfo apiInfo() {
+
+		return new ApiInfo("My App Title", //title
+				"Hello Test Application, sample app", // description 
+				"3.2 GA", //version 
+				"http://nareshit.com",//Terms of Service URL 
+				new Contact("RAGHU S", "http://raghus.com", "javabyraghu@gmail.com"), //developer contact 
+				"NIT License", //license provider name
+				"http://nareshit.com/license",  //license URL
+				Collections.emptyList()); //client names
+	}
+}
+------------------------------------------------------------------------------
+Swagger Annotations:
+a. @ApiOperation : For a method in Restcontroller, provide alias name
+
+b. @Api : For a RestController class, provide alias name
+
+c. @ApiIgnore : To avoid a class/method display at swagger
+
+
+*) To avoid Swagger in Production or any environment, use profiles
+		@Profile({"default","qa"})

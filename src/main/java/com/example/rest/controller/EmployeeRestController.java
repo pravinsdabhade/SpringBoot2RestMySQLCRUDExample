@@ -18,6 +18,8 @@ import com.example.rest.custom.exception.EmployeeNotFoundExcetion;
 import com.example.rest.model.Employee;
 import com.example.rest.service.IEmployeeService;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeRestController {
@@ -70,6 +72,7 @@ public class EmployeeRestController {
 	
 	// 5. delete employee by using id
 	@DeleteMapping("/remove/{id}")
+	@ApiIgnore
 	public ResponseEntity<String> deleteEmployee(@PathVariable Integer id){
 		ResponseEntity<String> response = null;
 		service.deleteEmployee(id);

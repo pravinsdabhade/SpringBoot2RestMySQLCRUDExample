@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.example.error.ErrorType;
 import com.example.rest.custom.exception.EmployeeNotFoundExcetion;
+import com.example.rest.error.ErrorType;
 
 @RestControllerAdvice
 public class MyCustomeExceptionHandler {
