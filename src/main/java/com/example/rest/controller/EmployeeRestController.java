@@ -39,12 +39,11 @@ public class EmployeeRestController {
 		// <?> Generic Wild card char -- indicates data type for Generic is decided 
 		// based on execution flow at runtime.
 		ResponseEntity<?> response = null;
-		
 		try {
 			Employee employee = service.getEmployeeById(id);
 			response = new ResponseEntity<>(employee, HttpStatus.OK);  // 200
-		}catch (EmployeeNotFoundExcetion e) {
-			response = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); //500
+		}catch (EmployeeNotFoundExcetion enfe) {
+			throw enfe;
 		}
 		return response;
 	}
@@ -63,8 +62,8 @@ public class EmployeeRestController {
 		try {
 			service.updateEmploee(e);
 			response = new ResponseEntity<>("Employee update with following id: "+e.getEmpId(), HttpStatus.OK);
-		}catch(EmployeeNotFoundExcetion ex) {
-			response = new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}catch(EmployeeNotFoundExcetion enfe) {
+			throw enfe;
 		}
 		return response;
 	}
@@ -73,12 +72,8 @@ public class EmployeeRestController {
 	@DeleteMapping("/remove/{id}")
 	public ResponseEntity<String> deleteEmployee(@PathVariable Integer id){
 		ResponseEntity<String> response = null;
-		try {
-			service.deleteEmployee(id);
-			response = new ResponseEntity<>("Employee delete with following id: "+ id,HttpStatus.OK);
-		}catch(EmployeeNotFoundExcetion ex) {
-			response = new ResponseEntity<>(ex.getMessage()+ id,HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		service.deleteEmployee(id);
+		response = new ResponseEntity<>("Employee delete with following id: "+ id,HttpStatus.OK);
 		return response;
 	}
 }
