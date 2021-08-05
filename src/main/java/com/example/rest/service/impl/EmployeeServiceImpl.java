@@ -26,9 +26,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Integer saveEmployee(Employee e) {
-		util.calcuateData(e);
-		e = empRepo.save(e);
-		return e.getEmpId();
+		Integer eId = 0;
+		if ((e.getEmpName() != null) && (e.getEmpDept() != null) && e.getEmpSalary().intValue() > 0) {
+			util.calculateData(e);
+			empRepo.save(e);
+			eId = e.getEmpId();
+		}
+		return eId;
 	}
 
 	/**
@@ -39,21 +43,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public void updateEmploee(Employee e) {
 		if (e.getEmpId() != null || empRepo.existsById(e.getEmpId())) {
-			util.calcuateData(e);
+			util.calculateData(e);
 			empRepo.save(e);
 		} else {
-			throw new EmployeeNotFoundExcetion((e.getEmpId()==null?
-					"No Id is provided!!" :
-					"Employee '"+e.getEmpId()+"' not exist"));
+			throw new EmployeeNotFoundExcetion(
+					(e.getEmpId() == null ? "No Id is provided!!" : "Employee '" + e.getEmpId() + "' not exist"));
 		}
 	}
 
 	/***
-	 * First check given id exist in Database 
-	 * 	If exist perform Delete operation
-	 *  else throw exception 
+	 * First check given id exist in Database If exist perform Delete operation else
+	 * throw exception
 	 */
-	
+
 	@Override
 	public void deleteEmployee(Integer id) {
 //		empRepo.deleteById(id);

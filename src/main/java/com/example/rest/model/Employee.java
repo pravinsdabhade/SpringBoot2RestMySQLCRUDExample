@@ -7,9 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "emptab")
 public class Employee {
@@ -18,12 +20,15 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
 	private Integer empId;
 
+	@NonNull
 	@Column(name = "ename")
 	private String empName;
 
+	@NonNull
 	@Column(name = "esalary")
 	private Double empSalary;
 
+	@NonNull
 	@Column(name = "edept")
 	private String empDept;
 

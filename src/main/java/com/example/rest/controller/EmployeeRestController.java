@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.rest.custom.exception.EmployeeNotFoundExcetion;
 import com.example.rest.model.Employee;
+import com.example.rest.model.Message;
 import com.example.rest.service.IEmployeeService;
 
 import springfox.documentation.annotations.ApiIgnore;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping("/api/employees")
+@CrossOrigin(origins = "*")
 public class EmployeeRestController {
 
 	@Autowired
@@ -52,9 +55,16 @@ public class EmployeeRestController {
 
 	// 3. Create one Employee
 	@PostMapping("/save")
-	public ResponseEntity<String> createEmployee(@RequestBody Employee e) {
-		Integer empId = service.saveEmployee(e);
-		return new ResponseEntity<>("Employee created with following id: " + empId, HttpStatus.OK);
+	public ResponseEntity<Message> createEmployee(@RequestBody Employee e) {
+		ResponseEntity<Message> resMsg= null;
+		try {
+			Integer empId = service.saveEmployee(e);
+			resMsg = new ResponseEntity<>(new Message("Employee created with following id: ",+empId+" -Saved"),HttpStatus.OK);
+		}catch (Exception ex) {
+			resMsg = new ResponseEntity<>(new Message("Fail","Unable to Save"),HttpStatus.INTERNAL_SERVER_ERROR);
+			ex.printStackTrace();
+		}
+		return resMsg;
 	}
 	
 	// 4. Update one Employee
